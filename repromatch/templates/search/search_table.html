@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load truefalse %}
+{% load tool_facets %}
+
+{% block title %}Reproducibility Match - Search By Task{% endblock title %}
+
+{% block content %}
+
+<style type="text/css">
+    .bold {font-weight:bold}
+    .bigbold {font-weight:bold;font-size:1.2em}
+    .subsection{margin-left: 1em}
+</style>
+
+    <form method="get" action=".">
+    <div style="margin-left:1em">
+        <input id="id_q" name="q" type="search" size="40"/><input type="submit" value="Search">
+    </div>
+    </form>
+
+    {% if query or page.object_list %}
+        <br/>
+	<dl>
+	  <dh>Refine Result:</dh>
+
+	  {% if facets.fields.capture.0.1 and facets.fields.capture.1.1 or facets.fields.capture_os.0.1 and facets.fields.capture_os.1.1 or facets.fields.capture_code.0.1 and facets.fields.capture_code.1.1 or facets.fields.capture_workflow.0.1 and facets.fields.capture_workflow.1.1 or facets.fields.capture_data.0.1 and facets.fields.capture_data.1.1 %}
+	  <dd class="subsection">Provenance Capture:
+	  {% if facets.fields.capture.0.1 and facets.fields.capture.1.1 %}
+            {% for facet in facets.fields.capture %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=capture_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.capture %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=capture_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          {% if facets.fields.capture_os.0.1 and facets.fields.capture_os.1.1 %}
+            {% for facet in facets.fields.capture_os %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=capture_os_exact:{{ facet.0|urlencode}}">OS-Based</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.capture_code.0.1 and facets.fields.capture_code.1.1 %}
+            {% for facet in facets.fields.capture_code %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=capture_code_exact:{{ facet.0|urlencode}}">Code-Based</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.capture_workflow.0.1 and facets.fields.capture_workflow.1.1 %}
+            {% for facet in facets.fields.capture_workflow %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=capture_workflow_exact:{{ facet.0|urlencode}}">Workflow-Based</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.capture_data.0.1 and facets.fields.capture_data.1.1 %}
+            {% for facet in facets.fields.capture_data %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=capture_data_exact:{{ facet.0|urlencode}}">Data-Based</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.representation.0.1 and facets.fields.representation.1.1 or facets.fields.representation_descriptive_only.0.1 and facets.fields.representation_descriptive_only.1.1 or facets.fields.representation_executable.0.1 and facets.fields.representation_executable.1.1 %}
+	  <dd class="subsection">Representation:
+	  {% if facets.fields.representation.0.1 and facets.fields.representation.1.1 %}
+            {% for facet in facets.fields.representation %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=representation_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.representation %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=representation_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          {% if facets.fields.representation_descriptive_only.0.1 and facets.fields.representation_descriptive_only.1.1 %}
+            {% for facet in facets.fields.representation_descriptive_only %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=representation_descriptive_only_exact:{{ facet.0|urlencode}}"> Descriptive-Only</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.representation_executable.0.1 and facets.fields.representation_executable.1.1 %}
+            {% for facet in facets.fields.representation_executable %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=representation_executable_exact:{{ facet.0|urlencode}}">Executable</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.replicability.0.1 and facets.fields.replicability.1.1 %}
+	  <dd class="subsection">Replicability:
+	  {% if facets.fields.replicability.0.1 and facets.fields.replicability.1.1 %}
+            {% for facet in facets.fields.replicability %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=replicability_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.replicability %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=replicability_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.modifiability.0.1 and facets.fields.modifiability.1.1 %}
+	  <dd class="subsection">Modifiability:
+	  {% if facets.fields.modifiability.0.1 and facets.fields.modifiability.1.1 %}
+            {% for facet in facets.fields.modifiability %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=modifiability_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.modifiability %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=modifiability_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+          </dd>
+          {% endif %}
+
+
+	  {% if facets.fields.portability.0.1 > 0 and facets.fields.portability.0.1 < page.paginator.count %}
+	  <dd class="subsection">Portability:
+          {% for facet in facets.fields.portability %}
+            {% if facet.1 > 0 and facet.1 < page.paginator.count %}
+              {% if facet.0 == 'NONE' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=portability_exact:{{ facet.0|urlencode}}">None</a> ({{ facet.1 }})
+              {% endif %}
+              {% if facet.0 == 'LOW' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=portability_exact:{{ facet.0|urlencode}}">Low</a> ({{ facet.1 }})
+              {% endif %}
+              {% if facet.0 == 'MEDIUM' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=portability_exact:{{ facet.0|urlencode}}">Medium</a> ({{ facet.1 }})
+              {% endif %}
+              {% if facet.0 == 'HIGH' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=portability_exact:{{ facet.0|urlencode}}">High</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endif %}
+	  {% endfor %}
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.longevity.0.1 and facets.fields.longevity.1.1 or facets.fields.longevity_archiving.0.1 and facets.fields.longevity_archiving.1.1 or facets.fields.longevity_upgrading.0.1 and facets.fields.longevity_upgrading.1.1 %}
+	  <dd class="subsection">Longevity:
+	  {% if facets.fields.longevity.0.1 and facets.fields.longevity.1.1 %}
+            {% for facet in facets.fields.longevity %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=longevity_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.longevity %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=longevity_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          {% if facets.fields.longevity_archiving.0.1 and facets.fields.longevity_archiving.1.1 %}
+            {% for facet in facets.fields.longevity_archiving %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=longevity_archiving_exact:{{ facet.0|urlencode}}"> Archiving</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.longevity_upgrading.0.1 and facets.fields.longevity_upgrading.1.1 %}
+            {% for facet in facets.fields.longevity_upgrading %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=longevity_upgrading_exact:{{ facet.0|urlencode}}">Upgrading</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.document_linkage.0.1 and facets.fields.document_linkage.1.1 or facets.fields.document_linkage_by_reference.0.1 and facets.fields.document_linkage_by_reference.1.1 or facets.fields.document_linkage_inline.0.1 and facets.fields.document_linkage_inline.1.1 %}
+	  <dd class="subsection">Document Linkage:
+	  {% if facets.fields.document_linkage.0.1 and facets.fields.document_linkage.1.1 %}
+            {% for facet in facets.fields.document_linkage %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=document_linkage_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.document_linkage %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=document_linkage_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          {% if facets.fields.document_linkage_by_reference.0.1 and facets.fields.document_linkage_by_reference.1.1 %}
+            {% for facet in facets.fields.document_linkage_by_reference %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=document_linkage_by_reference_exact:{{ facet.0|urlencode}}"> By Refrence</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.document_linkage_inline.0.1 and facets.fields.document_linkage_inline.1.1 %}
+            {% for facet in facets.fields.document_linkage_inline %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=document_linkage_inline_exact:{{ facet.0|urlencode}}">Inline</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.experiment_sharing.0.1 and facets.fields.experiment_sharing.1.1 or facets.fields.experiment_sharing_archival.0.1 and facets.fields.experiment_sharing_archival.1.1 or facets.fields.experiment_sharing_hosted_execution.0.1 and facets.fields.experiment_sharing_hosted_execution.1.1 %}
+	  <dd class="subsection">Experiment Sharing:
+	  {% if facets.fields.experiment_sharing.0.1 and facets.fields.experiment_sharing.1.1 %}
+            {% for facet in facets.fields.experiment_sharing %}
+	      {% if facet.0 == 'false' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=experiment_sharing_exact:{{ facet.0|urlencode}}">No</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+            {% for facet in facets.fields.experiment_sharing %}
+	      {% if facet.0 == 'true' %}
+	        <a href="{{ request.get_full_path }}&amp;selected_facets=experiment_sharing_exact:{{ facet.0|urlencode}}">Yes</a> ({{ facet.1 }})
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+
+          {% if facets.fields.experiment_sharing_archival.0.1 and facets.fields.experiment_sharing_archival.1.1 %}
+            {% for facet in facets.fields.experiment_sharing_archival %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=experiment_sharing_archival_exact:{{ facet.0|urlencode}}"> Archival</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.experiment_sharing_hosted_execution.0.1 and facets.fields.experiment_sharing_hosted_execution.1.1 %}
+            {% for facet in facets.fields.experiment_sharing_hosted_execution %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path }}&amp;selected_facets=experiment_sharing_hosted_execution_exact:{{ facet.0|urlencode}}">Hosted Execution</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+
+	  {% if facets.fields.supports_osx.0.1 and facets.fields.supports_osx.1.1 or facets.fields.supports_windows.0.1 and facets.fields.supports_windows.1.1 or facets.fields.supports_linux.0.1 and facets.fields.supports_linux.1.1 or facets.fields.supports_web_based.0.1 and facets.fields.supports_web_based.1.1 %}
+	  <dd class="subsection">OS Support:
+
+          {% if facets.fields.supports_osx.0.1 and facets.fields.supports_osx.1.1 %}
+            {% for facet in facets.fields.supports_osx %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path|no_page }}&amp;selected_facets=supports_osx_exact:{{ facet.0|urlencode}}">OS X</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.supports_windows.0.1 and facets.fields.supports_windows.1.1 %}
+            {% for facet in facets.fields.supports_windows %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path|no_page }}&amp;selected_facets=supports_windows_exact:{{ facet.0|urlencode}}">Windows</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.supports_linux.0.1 and facets.fields.supports_linux.1.1 %}
+            {% for facet in facets.fields.supports_osx %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path|no_page }}&amp;selected_facets=supports_linux_exact:{{ facet.0|urlencode}}">Linux</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if facets.fields.supports_web_based.0.1 and facets.fields.supports_web_based.1.1 %}
+            {% for facet in facets.fields.supports_web_based %}
+              {% if facet.0 == 'true' %}
+                <a href="{{ request.get_full_path|no_page }}&amp;selected_facets=supports_web_based_exact:{{ facet.0|urlencode}}">Web-based</a> ({{ facet.1 }})
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          </dd>
+          {% endif %}
+        </dl>
+        {{ request.get_full_path|facet_breadcrumb }}
+<br/>
+<a href="{{ request.get_full_path|as_list }}" >View results in a list</a>
+
+<h3>{{ page.paginator.count }} results:</h3>
+
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script type="text/javascript" src="/static/js/jquery-2.1.3.min.js"></script> 
+<script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script> 
+<script type="text/javascript" src="/static/js/jquery.floatThead.min.js"></script> 
+
+<table style="float:center;" id="myTable" class="tablesorter">
+<thead>
+<tr>
+    <th>Tool Name</th>
+    <th>Provenance Capture</th>
+    <th>Represen- tation</th>
+    <th>Replica- bility</th>
+    <th>Modifia- bility</th>
+    <th>Porta- bility</th>
+    <th>Longevity</th>
+    <th>Document Linkage</th>
+    <th>Experiment Sharing</th>
+    <th>OS&nbsp;X</th>
+    <th>Windows</th>
+    <th>Linux</th>
+    <th>Web- based</th>
+</tr>
+</thead>
+<tbody>
+{% for result in page.object_list%}
+{% with tool=result.object %}
+    <tr>
+    <td><a href="/tools/tool/{{tool.slug}}">{{tool.name}}</a></td>
+    <td>{{tool.capture|truefalse}}</td>
+    <td>{{tool.representation|truefalse}}</td>
+    <td>{{tool.replicability|truefalse}}</td>
+    <td>{{tool.modifiability|truefalse}}</td>
+    <td>{{tool.get_portability_display}}</td>
+    <td>{{tool.longevity|truefalse}}</td>
+    <td>{{tool.document_linkage|truefalse}}</td>
+    <td>{{tool.experiment_sharing|truefalse}}</td>
+    <td>{{tool.supports_osx|truefalse}}</td>
+    <td>{{tool.supports_windows|truefalse}}</td>
+    <td>{{tool.supports_linux|truefalse}}</td>
+    <td>{{tool.supports_web_based|truefalse}}</td>
+</tr>
+{% endwith %}
+{% empty %}
+    <p>No results found.</p>
+{% endfor %}
+</tbody>
+</table>
+
+<script>
+$(document).ready(function() { 
+
+    $("#myTable").tablesorter({
+        // define a custom text extraction function
+        textExtraction: function(node) {
+            // extract data from markup and return it
+            return node.innerHTML;
+        } 
+    }); 
+
+    $("#myTable").floatThead();
+   
+}); 
+</script>
+
+
+{% endif %}
+{% endblock %}

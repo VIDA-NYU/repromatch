@@ -1,0 +1,49 @@
+{{ object.description }}
+
+{{ object.name }}
+
+{% for tag in object.tags.all %}
+  {{tag}}
+{% endfor %}
+
+{% if object.capture %}Capture{% endif %}
+{% if object.capture_os %}Capture OS{% endif %}
+{% if object.capture_code %}Capture Code{% endif %}
+{% if object.capture_workflow %}Capture Workflow{% endif %}
+{% if object.capture_data %}Capture Data{% endif %}
+{% if object.capture_note %}{{object.capture_note}}{% endif %}
+
+{% if object.representation %}Representation{% endif %}
+{% if object.representation_descriptive_only %}Representation Descriptive-Only{% endif %}
+{% if object.representation_executable %}Representation Executable{% endif %}
+{% if object.representation_note %}{{object.representation_note}}{% endif %}
+
+{% if object.replicability %}Replicability{% endif %}
+{% if object.replicability_note %}{{object.replicability_note}}{% endif %}
+
+{% if object.modifiability %}Modifiability{% endif %}
+{% if object.modifiability_note %}{{object.modifiability_note}}{% endif %}
+
+{% if object.portability %}{{object.get_portability_display}} Portability{% endif %}
+{% if object.portability_note %}{{object.portability_note}}{% endif %}
+
+{% if object.longevity %}Longevity{% endif %}
+{% if object.longevity_archiving %}Longevity Archiving{% endif %}
+{% if object.longevity_upgrading %}Longevity Upgrading{% endif %}
+{% if object.longevity_note %}{{object.longevity_note}}{% endif %}
+
+{% if object.document_linkage %}Document Linkage{% endif %}
+{% if object.document_linkage_by_reference %}Document Linkage By Reference{% endif %}
+{% if object.document_linkage_inline %}Document Linkage Inline{% endif %}
+{% if object.document_linkage_note %}{{object.document_linkage_note}}{% endif %}
+
+{% if object.experiment_sharing %}Experiment Sharing{% endif %}
+{% if object.experiment_sharing_archival %}Experiment Sharing Archival{% endif %}
+{% if object.experiment_sharing_hosted_execution %}Experiment Sharing Hosted Execution{% endif %}
+{% if object.experiment_sharing_note %}{{object.experiment_sharing_note}}{% endif %}
+
+{% if object.supports_osx %}Supports Mac OSX{% endif %}
+{% if object.supports_windows %}Supports Windows{% endif %}
+{% if object.supports_linux %}Supports Linux{% endif %}
+{% if object.supports_web_based %}Supports Web-based access{% endif %}
+{% if object.supports_note %}{{object.supports_note}}{% endif %}

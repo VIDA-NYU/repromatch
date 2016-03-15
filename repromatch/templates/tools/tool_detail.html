@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+{% load truefalse %}
+
+<script type="text/javascript" src="/static/js/jquery-2.1.3.min.js"></script> 
+<script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script> 
+<style type="text/css">
+    .bold {font-weight:bold}
+    .subsection {margin-left: 1em}
+    .as_block {display: block}
+    .toolattr {margin-top:1em;font-weight:bold;font-size:1.2em;display:block}
+    .toolval {font-weight:bold; margin-left: 1em}
+    .note {margin-left: 1em;display: block}
+</style>
+
+<div style="margin-left:1em;max-width:40em;">
+<h1>Tool Details</h1>
+
+<h2>{{object.name}}</h2>
+
+<p class="subsection">{{object.description}}</p>
+
+{% if object.website %}
+    <div class="bold">Website:</div><span class="subsection"><a href={{object.website}}>{{object.website}}</a></span>
+{% endif %}
+
+{% if object.source %}
+    <br/><div class="bold">Source code:</div><span class="subsection"><a href={{object.source}}>{{object.source}}</a></span>
+{% endif %}
+
+{% if object.paper %}
+    <br/><div class="bold">Publication:</div><span class="subsection"><a href={{object.paper}}>{{object.paper}}</a></span>
+{% endif %}
+
+{% if object.tags %}
+    <div class="bold">Tags:</div> 
+    {% for tag in object.tags.all %}
+        <span class="subsection"><a href="/tools/tag/{{tag.slug}}">{{tag.name}}</a></span>
+    {% endfor %}
+{% endif %}
+
+<span class="toolattr">OS Support</span>
+<span class="toolval">OS X: {{object.supports_osx|truefalse}}</span>
+<span class="toolval">Windows: {{object.supports_windows|truefalse}}</span>
+<span class="toolval">Linux: {{object.supports_linux|truefalse}}</span>
+<span class="toolval">Web-based: {{object.supports_web_based|truefalse}}</span>
+{% if object.supports_note %}
+  <span class="note"><span class="bold">Note: </span> {{object.supports_note}}</span>
+{% endif %}
+
+<span class="toolattr">Provenance Capture: {{ object.capture|truefalse }}</span>
+{% if object.capture %}
+  <span class="toolval">OS-Based: </span>{{object.capture_os|truefalse}}
+  <span class="toolval">Code-Based: </span>{{object.capture_code|truefalse}}
+  <span class="toolval">Workflow-Based: </span>{{object.capture_workflow|truefalse}}
+  <span class="toolval">Data-Based: </span>{{object.capture_data|truefalse}}
+{% endif %}
+{% if object.capture_note %}
+  <span class="note"><span class="bold">Note: </span> {{object.capture_note}}</span>
+{% endif %}
+
+<span class="toolattr">Representation: {{ object.representation|truefalse }}</span>
+{% if object.representation %}
+  <span class="toolval">Descriptive-Only: </span>{{object.representation_descriptive_only|truefalse}}
+  <span class="toolval">Executable: </span>{{object.representation_executable|truefalse}}
+{% endif %}
+{% if object.representation_note %}
+  <span class="note"><span class="bold">Note: </span>{{object.representation_note}}</span>
+{% endif %}
+
+<span class="toolattr">Replicability: {{ object.replicability|truefalse }}</span>
+{% if object.replicability_note %}
+    <span class="note"><span class="bold">Note: </span>{{object.replicability_note}}</span>
+{% endif %}
+
+<span class="toolattr">Modifiability: {{ object.modifiability|truefalse }}</span>
+{% if object.modifiability_note %}
+    <span class="note"><span class="bold">Note: </span>{{object.modifiability_note}}</span>
+{% endif %}
+
+<span class="toolattr">Portability: </span>
+<span class="toolval"> {{ object.get_portability_display }} </span>
+{% if object.portability_note %}
+    <span class="note"><span class="bold">Note: </span>{{object.portability_note}}</span>
+{% endif %}
+
+<span class="toolattr">Longevity: {{ object.longevity|truefalse }}</span>
+{% if object.longevity %}
+  <span class="toolval">Archiving: </span>{{object.longevity_archiving|truefalse}}
+  <span class="toolval">Upgrading: </span>{{object.longevity_upgrading|truefalse}}
+{% endif %}
+{% if object.longevity_note %}
+  <span class="note"><span class="bold">Note: </span>{{object.longevity_note}}</span>
+{% endif %}
+
+<span class="toolattr">Document linkage: {{ object.document_linkage|truefalse }}</span>
+{% if object.document_linkage %}
+  <span class="toolval">By Reference: </span>{{object.document_linkage_by_reference|truefalse}}
+  <span class="toolval">Inline: </span>{{object.document_linkage_inline|truefalse}}
+{% endif %}
+{% if object.document_linkage_note %}
+  <span class="note"><span class="bold">Note: </span>{{object.document_linkage_note}}</span>
+{% endif %}
+
+<span class="toolattr">Experiment sharing: {{ object.experiment_sharing|truefalse }}</span>
+{% if object.experiment_sharing %}
+  <span class="toolval">Archival: </span>{{object.experiment_sharing_archive|truefalse}}
+  <span class="toolval">Hosted Execution: </span>{{object.experiment_sharing_hosted_execution|truefalse}}
+{% endif %}
+{% if object.experiment_sharing_note %}
+  <span class="note"><span class="bold">Note: </span>{{object.experiment_sharing_note}}</span>
+{% endif %}
+
+</div>
+{% endblock content %}
