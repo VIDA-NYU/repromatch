@@ -181,7 +181,7 @@ CMS_PLACEHOLDER_CONF = {}
 
 DATABASES = {
     'default':
-        {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/srv/repromatch/project.db', 'HOST': 'localhost', 'USER': '', 'PASSWORD': '', 'PORT': ''}
+        {'ENGINE': 'django.db.backends.sqlite3', 'NAME': 'project.db', 'HOST': 'localhost', 'USER': '', 'PASSWORD': '', 'PORT': ''}
 }
 
 MIGRATION_MODULES = {
