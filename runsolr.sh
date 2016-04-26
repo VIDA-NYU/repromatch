@@ -1,2 +1,2 @@
-cd /srv/repromatch/apache-solr-3.5.0/example
+cd "$(dirname "$0")"/apache-solr-3.5.0/example
 nohup java -jar start.jar &
