@@ -19,6 +19,11 @@
     </form>
 
     {% if query or page.object_list %}
+
+<script>
+    ga('send', 'event', 'tools', 'search', '{{ query }}')
+</script>
+
         <br/>
 	<dl>
 	  <dh>Refine Result:</dh>

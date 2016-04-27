@@ -8,6 +8,11 @@
 
 {% block header %}
 {% if query or page.object_list %}
+
+<script>
+    ga('send', 'event', 'tools', 'search', '{{ query }}')
+</script>
+
 <span style="font-size:3em; text-align: center;">ReproMatch</span> 
 {% else %}
 <div style="font-size:3em; text-align: center;">ReproMatch</div> 
