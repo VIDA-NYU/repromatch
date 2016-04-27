@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+{% load truefalse %}
+
+<script type="text/javascript" src="/static/js/jquery-2.1.3.min.js"></script> 
+<script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script> 
+
+<h1>Software Details</h1>
+
+<h2>{{object.name}}</h2>
+
+<p>{{object.description}}</p>
+
+{% if object.website %}
+    Website: <a href={{object.website}}>{{object.website}}</a>
+{% endif %}
+
+{% if object.source %}
+    <br/>Source code: <a href={{object.source}}>{{object.source}}</a>
+{% endif %}
+
+{% if object.paper %}
+    <br/>Publication: <a href={{object.paper}}>{{object.paper}}</a>
+{% endif %}
+
+{% if object.tags %}
+    <p> Tags: 
+    {% for tag in object.tags.all %}
+        <a href="/tools/tag/{{tag.slug}}">{{tag.name}}</a>
+    {% endfor %}
+    </p>
+{% endif %}
+
+<p> Capture: {{ object.capture|truefalse }}
+{% if object.capture %}
+    <br/> OS-Based: {{object.capture_os|truefalse}}
+    <br/> Code-Based: {{object.capture_code|truefalse}}
+    <br/> Workflow-Based: {{object.capture_workflow|truefalse}}
+    <br/> Data-Based: {{object.capture_data|truefalse}}
+{% endif %}
+{% if object.capture_note %}
+    <br/> Note: {{object.capture_note}}
+{% endif %}
+</p>
+
+<p> Representation: {{ object.representation|truefalse }}
+{% if object.representation %}
+    <br/> Descriptive-Only: {{object.representation_descriptive_only|truefalse}}
+    <br/> Executable: {{object.representation_executable|truefalse}}
+{% endif %}
+{% if object.representation_note %}
+    <br/> Note: {{object.representation_note}}
+{% endif %}
+</p>
+
+<p> Replicability: {{ object.replicability|truefalse }}
+{% if object.replicability_note %}
+    <br/> Note: {{object.replicability_note}}
+{% endif %}
+</p>
+
+<p> Modifiability: {{ object.modifiability|truefalse }}
+{% if object.modifiability_note %}
+    <br/> Note: {{object.modifiability_note}}
+{% endif %}
+</p>
+
+<p> Portability: {{ object.get_portability_display }}
+{% if object.portability_note %}
+    <br/> Note: {{object.portability_note}}
+{% endif %}
+</p>
+
+<p> Longevity: {{ object.longevity|truefalse }}
+{% if object.longevity %}
+    <br/> Archiving: {{object.longevity_archiving|truefalse}}
+    <br/> Upgrading: {{object.longevity_upgrading|truefalse}}
+{% endif %}
+{% if object.longevity_note %}
+    <br/> Note: {{object.longevity_note}}
+{% endif %}
+</p>
+
+<p> Document linkage: {{ object.document_linkage|truefalse }}
+{% if object.document_linkage %}
+    <br/> By Reference: {{object.document_linkage_by_reference|truefalse}}
+    <br/> Inline: {{object.document_linkage_inline|truefalse}}
+{% endif %}
+{% if object.document_linkage_note %}
+    <br/> Note: {{object.document_linkage_note}}
+{% endif %}
+</p>
+
+<p> Experiment sharing: {{ object.experiment_sharing|truefalse }}
+{% if object.experiment_sharing %}
+    <br/> Archival: {{object.experiment_sharing_archive|truefalse}}
+    <br/> Hosted Execution: {{object.experiment_sharing_hosted_execution|truefalse}}
+{% endif %}
+{% if object.representation_note %}
+    <br/> Note: {{object.representation_note}}
+{% endif %}
+</p>
+
+<p>   Support for OSX: {{object.supports_osx|truefalse}}
+<br/> Support for Windows: {{object.supports_windows|truefalse}}
+<br/> Support for Linux: {{object.supports_linux|truefalse}}
+{% if object.supports_note %}
+    <br/> Note: {{object.supports_note}}
+{% endif %}
+</p>
+
+{% endblock content %}
