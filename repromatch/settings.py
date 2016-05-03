@@ -1,4 +1,4 @@
-import os
+import os, sys
 gettext = lambda s: s
 DATA_DIR = os.path.dirname(os.path.dirname(__file__))
 """
@@ -181,7 +181,10 @@ CMS_PLACEHOLDER_CONF = {}
 
 DATABASES = {
     'default':
-        {'ENGINE': 'django.db.backends.sqlite3', 'NAME': 'project.db', 'HOST': 'localhost', 'USER': '', 'PASSWORD': '', 'PORT': ''}
+        {'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                 '..', 'project.db')),
+         'HOST': 'localhost', 'USER': '', 'PASSWORD': '', 'PORT': ''}
 }
 
 MIGRATION_MODULES = {
