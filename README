@@ -5,7 +5,7 @@ Most of this is a standard djangocms installation.
 
 Hack for PIL error: http://stackoverflow.com/questions/5914673/python-ctypes-memoryerror-in-fcgi-process-from-pil-library
 
-Lucene is using an incompatible chema that needs 2 fixes:
+Lucene is using an incompatible schema that needs 2 fixes:
 
 * Change lang path (? TODO)
 * Change a type (? TODO)

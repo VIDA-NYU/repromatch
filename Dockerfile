@@ -14,5 +14,5 @@ COPY apache-solr-3.5.0 /repromatch/apache-solr-3.5.0
 COPY repromatch /repromatch/repromatch
 COPY tools /repromatch/tools
 RUN sed -i "s/SECRET_KEY = ''/SECRET_KEY='$(dd if=/dev/urandom bs=3 count=15 | base64 | sed 's/[\/]//g')'/" repromatch/settings.py
-ENTRYPOINT ["/repromatch/venv/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/bin/sh", "-c", "./runsolr.sh & . /venv/bin/activate && ./manage.py runserver 0.0.0.0:8000"]
 EXPOSE 8000
